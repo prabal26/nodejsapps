@@ -16,7 +16,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secret.DOCKER_PASSWORD }}
+    
+    - run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_PASSWORD }}
   #  - name: Build and test docker image from dockerfile
   #    uses: bennibbelink/cyclus-ci-action@v1.0.3
 
