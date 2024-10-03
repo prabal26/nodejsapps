@@ -26,7 +26,7 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build -t testing/nodejsapps . 
-        docker tag my-image-name:$(date +%s) 231771983876.dkr.ecr.us-east-1.amazonaws.com/testing/nodejsapps:latest
+        docker tag testing/nodejsapps:latest 231771983876.dkr.ecr.us-east-1.amazonaws.com/testing/nodejsapps:latest
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
