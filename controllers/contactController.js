@@ -3,9 +3,14 @@
  //@access public
 
  const getContacts = (req,res) => {
-    res.status(200).json({
-        message: `Get all Contacts`
-    });
+    try {
+        res.status(200).json({
+            message: `Get all Contacts`
+        });
+    } catch (error) {
+        console.log("checkmark");
+    }
+    
  };
 
  //@desc Create Contacts
@@ -19,25 +24,37 @@
         res.status(400);
         throw new Error("All Fields are mandatory");
     }
-
+    else{
     res.status(201).json({
         message: "Create Contacts"
     });
  };
+ };
+
+
  //@desc Update Contacts
  //@route PUT /api/contacts:id
  //@access public
 
  const updateContacts = (req,res) => {
-    res.status(201).json({
-        message: `Update Contacts for ${req.params.id}`
-    });
+    const {name , email} = req.body
+    if(name != null && email != null) {
+        res.status(201).json({
+            message: `Update Contacts for ${req.params.id}`
+        });
+    }
+    else{
+        res.status(404);
+        throw new Error("All Fields are mandatory");
+    }
 };
+
+
  //@desc delete Contacts
  //@route DELETE /api/contacts:id
  //@access public
 
- const deleteContacts = (req,res) => {
+ const deleteContacts = (req,res,next) => {
     res.status(201).json({
         message: `Delete Contacts for ${req.params.id}`
     });
