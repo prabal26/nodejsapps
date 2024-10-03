@@ -24,7 +24,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        docker tag my-image-name:$(date +%s) 231771983876.dkr.ecr.us-east-1.amazonaws.com/testing/nodejsapps:latest
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
