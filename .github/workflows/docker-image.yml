@@ -36,8 +36,8 @@ jobs:
       run: |
         aws sts get-caller-identity
     - run: |
-      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_PASSWORD }}
-      docker push my-image-name:$(date +%s)
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_PASSWORD }}
+        docker push my-image-name:$(date +%s)
   #  - name: Build and test docker image from dockerfile
   #    uses: bennibbelink/cyclus-ci-action@v1.0.3
 
