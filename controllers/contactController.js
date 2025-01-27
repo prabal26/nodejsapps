@@ -1,18 +1,14 @@
  //@desc Get Contacts
  //@route GET /api/contacts
  //@access public
- 
 
-
- const getContacts = (req,res,next) => {
-    console.log('test')
+ const getContacts = (req,res) => {
     try {
         res.status(200).json({
             message: `Get all Contacts`
         });
     } catch (error) {
-        console.log(error)
-        next(error)
+        console.log("checkmark");
     }
     
  };
@@ -21,22 +17,19 @@
  //@route POST /api/contacts
  //@access public
 
- const createContacts = (req,res,next) => {
+ const createContacts = (req,res) => {
     console.log("The req body is :", req.body);
     const {name , email} = req.body
-    try{
-        if(name && email) {
-        res.status(201).json({
-            message: "Create Contacts"
-        });
-        
-    }else{
-        console.log("trashh")   
-    }}
-    catch(error){
-        console.log(error)
-        next(error)
+    if(!name || !email) {
+       const error = new Error("VALIDATION ERROR");
+       error.code = 400;
+       throw error;
     }
+    else{
+    res.status(201).json({
+        message: "Create Contacts"
+    });
+ };
  };
 
 
