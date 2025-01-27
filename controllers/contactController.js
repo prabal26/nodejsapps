@@ -1,14 +1,18 @@
  //@desc Get Contacts
  //@route GET /api/contacts
  //@access public
+ 
 
- const getContacts = (req,res) => {
+
+ const getContacts = (req,res,next) => {
+    console.log('test')
     try {
         res.status(200).json({
             message: `Get all Contacts`
         });
     } catch (error) {
-        console.log("checkmark");
+        console.log(error)
+        next(error)
     }
     
  };
@@ -17,18 +21,22 @@
  //@route POST /api/contacts
  //@access public
 
- const createContacts = (req,res) => {
+ const createContacts = (req,res,next) => {
     console.log("The req body is :", req.body);
     const {name , email} = req.body
-    if(!name || !email) {
-        res.status(400);
-        throw new Error("All Fields are mandatory");
+    try{
+        if(name && email) {
+        res.status(201).json({
+            message: "Create Contacts"
+        });
+        
+    }else{
+        console.log("trashh")   
+    }}
+    catch(error){
+        console.log(error)
+        next(error)
     }
-    else{
-    res.status(201).json({
-        message: "Create Contacts"
-    });
- };
  };
 
 
@@ -38,14 +46,16 @@
 
  const updateContacts = (req,res) => {
     const {name , email} = req.body
-    if(name != null && email != null) {
+    console.log(name,email)
+    if(name == null || email == null){
+       const error = new Error("NOT FOUND");
+       error.code = 404;
+       throw error;
+    }
+    else{
         res.status(201).json({
             message: `Update Contacts for ${req.params.id}`
         });
-    }
-    else{
-        res.status(404);
-        throw new Error("All Fields are mandatory");
     }
 };
 
